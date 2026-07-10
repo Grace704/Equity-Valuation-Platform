@@ -11,6 +11,6 @@ try:
     print(balance_sheet.head())
     print("\nCash Flow Statement:")
     print(cashflow.head())
-    print(f"Saved price data to {file_path}")cx
+    print(f"Saved price data to {file_path}")
 except ValueError as error:
     print(error)
