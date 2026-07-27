@@ -17,7 +17,9 @@ from ratios import (
     calculate_debt_to_equity_ratio,
     calculate_operating_margin,
     calculate_asset_turnover_ratio,
-    calculate_revenue_growth)
+    calculate_revenue_growth,
+    calculate_net_income_growth,
+    calculate_free_cash_flow_growth)
 ticker = input("Enter the stock ticker symbol: ").upper()
 try:
     price, file_path = download_price_data(ticker)
@@ -72,6 +74,46 @@ try:
     return_on_assets = calculate_return_on_assets(income_statement, balance_sheet)
     print("Return on Assets:")
     print(return_on_assets)
+
+    earnings_per_share = calculate_earnings_per_share(income_statement, balance_sheet)
+    print("Earnings Per Share:")
+    print(earnings_per_share)
+
+    price_to_earnings = calculate_price_to_earnings_ratio(price, income_statement, balance_sheet)
+    print("Price-to-Earnings Ratio:")
+    print(price_to_earnings)
+    
+    price_to_book = calculate_price_to_book_ratio(price, balance_sheet)
+    print("Price-to-Book Ratio:")
+    print(price_to_book)
+
+    return_on_equity = calculate_return_on_equity(income_statement, balance_sheet)
+    print("Return on Equity:")
+    print(return_on_equity)
+
+    debt_to_equity = calculate_debt_to_equity_ratio(balance_sheet)
+    print("Debt-to-Equity Ratio:")
+    print(debt_to_equity)
+
+    operating_margin = calculate_operating_margin(income_statement)
+    print("Operating Margin:")
+    print(operating_margin)
+    
+    asset_turnover = calculate_asset_turnover_ratio(income_statement, balance_sheet)
+    print("Asset Turnover Ratio:")
+    print(asset_turnover)
+    
+    revenue_growth = calculate_revenue_growth(income_statement)
+    print("Revenue Growth:")
+    print(revenue_growth)
+
+    net_income_growth = calculate_net_income_growth(income_statement)
+    print("Net Income Growth:")
+    print(net_income_growth)
+
+    free_cash_flow_growth = calculate_free_cash_flow_growth(cashflow)
+    print("Free Cash Flow Growth:")
+    print(free_cash_flow_growth)
 
 except ValueError as error:
     print(error)
