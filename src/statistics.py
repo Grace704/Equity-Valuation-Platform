@@ -24,8 +24,8 @@ def calculate_sharpe_ratio(daily_returns, risk_free_rate=0.01, trading_days=252)
     return sharpe_ratio
 
 def calculate_max_drawdown(price_data):
-    daily_returns = price_data["Close"].pct_change().dropna()
-    cumulative_returns = (1 + price_data["Close"].pct_change()).cumprod()
+    daily_returns = price_data["Close"].pct_change(fill_method=None).dropna()
+    cumulative_returns = (1 + price_data["Close"].pct_change(fill_method=None)).cumprod()
     peak = cumulative_returns.cummax()
     drawdown = (cumulative_returns - peak) / peak
     max_drawdown = drawdown.min()
