@@ -16,7 +16,7 @@ def calculate_current_ratio(balance_sheet):
 
 def calculate_debt_to_equity_ratio(balance_sheet):
     total_liabilities = balance_sheet.loc["Total Liabilities Net Minority Interest"].values[0]
-    total_equity = balance_sheet.loc["Stockholder Equity"].values[0]
+    total_equity = balance_sheet.loc["Stockholders Equity"].values[0]
     if total_equity == 0:
         return 0
     debt_to_equity_ratio = total_liabilities / total_equity
@@ -32,7 +32,7 @@ def calculate_debt_to_assets_ratio(balance_sheet):
 
 def calculate_return_on_equity(income_statement, balance_sheet):
     net_income = income_statement.loc["Net Income"].values[0]
-    total_equity = balance_sheet.loc["Stockholder Equity"].values[0]
+    total_equity = balance_sheet.loc["Stockholders Equity"].values[0]
     if total_equity == 0:
         return 0
     return_on_equity = net_income / total_equity
@@ -47,7 +47,7 @@ def calculate_return_on_assets(income_statement, balance_sheet):
     return return_on_assets
 
 def calculate_operating_margin(income_statement):
-    operating_income = income_statement.loc["Operating Income or Loss"].values[0]
+    operating_income = income_statement.loc["Operating Income"].values[0]
     revenue = income_statement.loc["Total Revenue"].values[0]
     if revenue == 0:
         return 0
@@ -79,7 +79,7 @@ def calculate_price_to_earnings_ratio(price_data, income_statement, balance_shee
     return price_to_earnings_ratio
 
 def calculate_price_to_book_ratio(price_data, balance_sheet):
-    total_equity = balance_sheet.loc["Stockholder Equity"].values[0]
+    total_equity = balance_sheet.loc["Stockholders Equity"].values[0]
     total_shares_outstanding = balance_sheet.loc["Ordinary Shares Number"].values[0]
     if total_shares_outstanding == 0:
         return 0
