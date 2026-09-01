@@ -1,10 +1,12 @@
 from data_loader import download_price_data, download_financial_statements
+
 from statistics import (
     calculate_daily_returns, 
     calculate_average_daily_return, 
     calculate_annalized_return, 
     calculate_annualized_volatility, 
     calculate_sharpe_ratio)
+
 from ratios import (
     calculate_net_profit_margin,
     calculate_current_ratio,
@@ -20,7 +22,19 @@ from ratios import (
     calculate_revenue_growth,
     calculate_net_income_growth,
     calculate_free_cash_flow_growth)
+
+from valuation import (
+    calculate_book_value_per_share,
+    calculate_pe_valuation,
+    calculate_pb_valuation,
+    calculate_graham_value,
+    calculate_intrinsic_value,
+    calculate_target_buy_price,
+    calculate_expected_upside,
+    summarize_valuation)
+
 ticker = input("Enter the stock ticker symbol: ").upper()
+
 try:
     price, file_path = download_price_data(ticker)
 
@@ -114,6 +128,28 @@ try:
     free_cash_flow_growth = calculate_free_cash_flow_growth(cashflow)
     print("Free Cash Flow Growth:")
     print(free_cash_flow_growth)
+
+    book_value_per_share = calculate_book_value_per_share(balance_sheet)
+    current_price = price["Close"].dropna().iloc[-1]
+
+    fair_pe_ratio = float(input("Enter a fair P/E ratio for this stock (e.g. 15): "))
+    fair_pb_ratio = float(input("Enter a fair P/B ratio for this stock (e.g. 1.5): "))
+
+    pe_valuation = calculate_pe_valuation(earnings_per_share, fair_pe_ratio)
+    pb_valuation = calculate_pb_valuation(book_value_per_share, fair_pb_ratio)
+    graham_value = calculate_graham_value(earnings_per_share, book_value_per_share)
+
+    intrinsic_value = calculate_intrinsic_value(pe_valuation, pb_valuation, graham_value)
+    target_buy_price = calculate_target_buy_price(intrinsic_value, margin_of_safety=0.25)
+    expected_upside = calculate_expected_upside(intrinsic_value, current_price)
+
+    valuation_summary = summarize_valuation(
+        pe_valuation, pb_valuation, graham_value,
+        intrinsic_value, target_buy_price, current_price, expected_upside)
+
+    print("\nValuation Summary:")
+    for key, value in valuation_summary.items():
+        print(f"{key}: {value}")
 
 except ValueError as error:
     print(error)
